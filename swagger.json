@@ -1,0 +1,124 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This is the swagger node.js API project",
+        "version": "1.0.0",
+        "title": "Online Store API",
+        "contect": {
+            "email": "test@mail.com",
+            "mobile-no": "+111111111"
+        },
+        "license": {
+            "name": "Apeche 2.0",
+            "url": "#"
+        }
+    },
+    "schemas": [
+        "http"
+    ],
+    "host": "localhost:8080",
+    "securityDefinitions":{
+        "bearerAuth": {
+          "type": "apiKey",
+          "name": "Authorization",
+          "scheme": "bearer",
+          "in": "header"
+        }
+      },
+    "basePath": "",
+    "paths": {
+        "/feed/posts": {
+            "get": {
+                "summary": "Get all the tasks",
+                "description": "Get all the tasks",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "sechema": {
+                            "type": "array",
+                            "item": {
+                                "$ref": "#/definitions/postResponse"
+                            }
+                        }
+                    }
+                },
+                "security": [ { "bearerAuth": [] } ]
+            }
+        },
+        "/auth/signup": {
+            "put": {
+                "summary": "signup",
+                "description": "signup users",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "signup payload",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/signupPayload"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "successful operation",
+                        "sechema": {
+                            "type": "object",
+                            "item": {
+                                "$ref": "#/definitions/signupResponse"
+                            }
+                        }
+                    }
+                },
+                "security": [ { "bearerAuth": [] } ]
+            }
+        }
+    },
+    "definitions": {
+        "postResponse": {
+            "type": "object",
+            "properties": {
+                "title": {
+                    "type": "string"
+                },
+                "content": {
+                    "type": "string"
+                }
+            }
+        },
+        "signupResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                },
+                "userId": {
+                    "type": "string"
+                }
+            }
+        },
+        "signupPayload": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
