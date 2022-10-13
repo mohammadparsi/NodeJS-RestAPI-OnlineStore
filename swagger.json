@@ -81,6 +81,39 @@
                 },
                 "security": [ { "bearerAuth": [] } ]
             }
+        },
+        "/admin/product": {
+            "post": {
+                "summary": "Create Product",
+                "description": "Create a new product in database",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "signup payload",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/productPayload"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "successful operation",
+                        "sechema": {
+                            "type": "object",
+                            "item": {
+                                "$ref": "#/definitions/productResponse"
+                            }
+                        }
+                    }
+                },
+                "security": [ { "bearerAuth": [] } ]
+            }
         }
     },
     "definitions": {
@@ -106,6 +139,17 @@
                 }
             }
         },
+        "productResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                },
+                "product": {
+                    "type": "object"
+                }
+            }
+        },
         "signupPayload": {
             "type": "object",
             "properties": {
@@ -117,6 +161,17 @@
                 },
                 "password": {
                     "type": "string"
+                }
+            }
+        },
+        "productPayload": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "category": {
+                    "type": "number"
                 }
             }
         }
