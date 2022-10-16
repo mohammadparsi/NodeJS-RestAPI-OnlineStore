@@ -6,6 +6,7 @@ const feedRoutes = require('./routes/feed');
 const adminRoutes = require('./routes/admin');
 const customerRoutes = require('./routes/customer');
 const authRoutes = require('./routes/auth');
+const chatRoutes = require('./routes/chat');
 
 const app = express();
 
@@ -27,7 +28,19 @@ app.use('/feed', feedRoutes);
 app.use('/admin', adminRoutes);
 app.use('/customer', customerRoutes);
 app.use('/auth', authRoutes);
+app.use('/chat', chatRoutes);
 
 mongoose.connect('mongodb://0.0.0.0:27017/shop')
-.then(result => app.listen(8080))
-.catch(err => console.log(err))
+  .then(result => {
+    const server = app.listen(8080);
+    const io = require('./socket').init(server);
+    io.on('connection', (socket) => {
+      console.log('client connected!');
+      // socket.on('new message', data => {
+      //   console.log(data);
+      //   socket.emit('new message', {from: data.from, to: '634c068195d894398ce1a9d3', message: data.message});
+      // });
+    });
+
+  })
+  .catch(err => console.log(err))
